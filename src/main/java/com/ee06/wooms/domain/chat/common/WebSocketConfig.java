@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.setErrorHandler(errorHandler).addEndpoint("/ws")
                 .addInterceptors(customHandshakeInterceptor)
-            .setAllowedOrigins("http://localhost:5173","http://localhost:3000","https://i11e206.p.ssafy.io");
+            .setAllowedOrigins("http://localhost:5173","http://localhost:3000","https://wooms.duckdns.org");
     }
 
     @Override

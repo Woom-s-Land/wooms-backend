@@ -9,7 +9,7 @@ import java.io.IOException;
 public class CorsFilter implements Filter {
 
     private static final String ALLOWED_ORIGIN_1 = "http://localhost:5173";
-    private static final String ALLOWED_ORIGIN_2 = "https://i11e206.p.ssafy.io";
+    private static final String ALLOWED_ORIGIN_2 = "https://wooms.duckdns.org";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -31,7 +31,7 @@ import java.util.List;
 public class PhotoController {
     private final PhotoService photoService;
 
-    @PostMapping(consumes = "multipart/form-data")
+    @PostMapping(value = "/photos", consumes = "multipart/form-data")
     public ResponseEntity<CommonResponse> create(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                  @PathVariable("woomsId") Long woomsId,
                                                  @RequestParam("summary") String summary,

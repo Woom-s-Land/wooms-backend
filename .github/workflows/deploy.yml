@@ -34,13 +34,16 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      - name: Sync code & artifacts to EC2
+      - name: Sync artifacts to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "."
+          source: |
+            build/libs/*.jar
+            Dockerfile
+            docker-compose.yml
           target: "~/wooms-backend"
 
       - name: Build & Deploy on EC2
@@ -57,24 +60,29 @@ jobs:
             docker compose build --no-cache
             docker compose down
 
-            # env_file 생성 (echo 사용)
-            echo SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}     > env_file
-            echo SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }} >> env_file
-            echo SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }} >> env_file
-            echo SPRING_JWT_SECRET=${{ secrets.SPRING_JWT_SECRET }}               >> env_file
-            echo SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID }} >> env_file
-            echo SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET }} >> env_file
-            echo SPRING_DATA_REDIS_HOST=${{ secrets.SPRING_DATA_REDIS_HOST }}     >> env_file
-            echo SPRING_DATA_REDIS_PORT=${{ secrets.SPRING_DATA_REDIS_PORT }}     >> env_file
-            echo SPRING_DATA_REDIS_PASSWORD=${{ secrets.SPRING_DATA_REDIS_PASSWORD }} >> env_file
-            echo SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}         >> env_file
-            echo SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}         >> env_file
-            echo CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}           >> env_file
-            echo CLOUD_AWS_CREDENTIALS_ACCESS_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESS_KEY }} >> env_file
-            echo CLOUD_AWS_CREDENTIALS_SECRET_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRET_KEY }} >> env_file
-            echo SPRING_AI_OPENAI_API_KEY=${{ secrets.SPRING_AI_OPENAI_API_KEY }} >> env_file
-            echo SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}                 >> env_file
-
+            # env_file 생성 (민감·환경별 값만)
+            cat > env_file <<EOF
+SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+SPRING_JWT_SECRET=${{ secrets.SPRING_JWT_SECRET }}
+SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID }}
+SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET }}
+SPRING_DATA_REDIS_HOST=${{ secrets.SPRING_DATA_REDIS_HOST }}
+SPRING_DATA_REDIS_PORT=${{ secrets.SPRING_DATA_REDIS_PORT }}
+SPRING_DATA_REDIS_PASSWORD=${{ secrets.SPRING_DATA_REDIS_PASSWORD }}
+SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}
+SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}
+CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}
+CLOUD_AWS_CREDENTIALS_ACCESS_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESS_KEY }}
+CLOUD_AWS_CREDENTIALS_SECRET_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRET_KEY }}
+SPRING_AI_OPENAI_API_KEY=${{ secrets.SPRING_AI_OPENAI_API_KEY }}
+SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}
+EOF
+  
+            ls -l env_file
+            cat env_file
+            
             # 컨테이너 재기동
             docker compose --env-file env_file up -d
 

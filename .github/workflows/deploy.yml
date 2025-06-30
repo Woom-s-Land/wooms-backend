@@ -52,18 +52,18 @@ jobs:
           script: |
             set -e
             pwd
-            cd ~/wooms_backend
+            ls -al
+            cd /home/${{ secrets.EC2_USER }}/wooms-backend
             
             # Docker 이미지 빌드 & 이전 컨테이너 내리기
             docker compose build --no-cache
             docker compose down
             
-            pwd
-            cd ~/wooms_backend
             
             # env_file 생성 (echo 사용)
             echo "SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}"     > env_file
             
+            pwd
             ls -al
             
             echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> env_file

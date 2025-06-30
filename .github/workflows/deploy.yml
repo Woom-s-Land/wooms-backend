@@ -74,6 +74,8 @@ jobs:
             echo "SPRING_AI_OPENAI_API_KEY=${{ secrets.SPRING_AI_OPENAI_API_KEY }}" >> env_file
             echo "SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}"                 >> env_file
             
+            docker compose build --no-cache
+            
             # Docker 이미지 빌드 & 이전 컨테이너 내리기
             docker compose down
             

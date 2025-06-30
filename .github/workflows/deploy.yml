@@ -51,7 +51,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
-            cd ~/wooms-backend
+            pwd
+            ls -al
+            cd /home/${{ secrets.EC2_USER }}/wooms-backend
             
             # Docker 이미지 빌드 & 이전 컨테이너 내리기
             docker compose build --no-cache

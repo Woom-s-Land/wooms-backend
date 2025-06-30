@@ -10,12 +10,20 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout backend
+      - name: Checkout develop#2
         uses: actions/checkout@v3
         with:
           ref: 'develop#2'
+
+      - name: Set up JDK 22 on Runner
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: '22'
+
+      - name: Build with Gradle
+        run: ./gradlew clean build --exclude-task test
 
       - name: Set up SSH key
         run: |
@@ -23,13 +31,16 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      - name: Sync backend code to EC2
+      - name: Sync artifacts to EC2
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "./"
+          source: |
+            build/libs/*.jar
+            Dockerfile
+            docker-compose.yml
           target: "~/wooms-backend"
 
       - name: Build & Deploy on EC2
@@ -41,10 +52,6 @@ jobs:
           script: |
             set -e
             cd ~/wooms-backend
-
-            # 권한 설정 & Gradle 빌드
-            chmod +x -R .
-            ./gradlew clean build --exclude-task test
 
             # Docker 이미지 빌드 및 이전 컨테이너 내리기
             docker compose build --no-cache
@@ -70,7 +77,7 @@ jobs:
             SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}
             EOF
 
-            # 새 이미지로 컨테이너 기동
+            # 컨테이너 재기동
             docker compose --env-file env_file up -d
 
             # 정리

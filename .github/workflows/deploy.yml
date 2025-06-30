@@ -16,6 +16,9 @@ jobs:
         with:
           ref: 'develop#2'
 
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
       - name: Set up JDK 22 on Runner
         uses: actions/setup-java@v3
         with:
@@ -53,7 +56,7 @@ jobs:
             set -e
             cd ~/wooms-backend
 
-            # Docker 이미지 빌드 및 이전 컨테이너 내리기
+            # Docker 이미지 빌드 & 이전 컨테이너 내리기
             docker compose build --no-cache
             docker compose down
 

@@ -1,8 +1,7 @@
-# .github/workflows/backend-deploy.yml
+# .github/workflows/deploy.yml
 
 name: Backend CI/CD to EC2
 
-# 'backend' 브랜치에 push 되거나 수동 실행 가능
 on:
   push:
     branches: [ 'deploy#2' ]
@@ -13,20 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1) 코드 체크아웃 (backend 브랜치)
       - name: Checkout backend
         uses: actions/checkout@v3
         with:
           ref: 'deploy#2'
 
-      # 2) SSH 키 준비
       - name: Set up SSH key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
 
-      # 3) 코드 싱크: scp로 EC2 ~/wooms-backend 디렉터리에 업로드
       - name: Sync backend code to EC2
         uses: appleboy/scp-action@master
         with:
@@ -36,50 +32,47 @@ jobs:
           source: "./"
           target: "~/wooms-backend"
 
-      # 4) SSH로 EC2에 접속해 빌드·배포
       - name: Build & Deploy on EC2
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          set -e
-          cd ~/wooms-backend
+          script: |
+            set -e
+            cd ~/wooms-backend
 
-          # 권한 설정 & Gradle 빌드
-          chmod +x -R .
-          ./gradlew clean build --exclude-task test
+            # 권한 설정 & Gradle 빌드
+            chmod +x -R .
+            ./gradlew clean build --exclude-task test
 
-          # Docker 이미지 빌드
-          docker compose build --no-cache
+            # Docker 이미지 빌드 및 이전 컨테이너 내리기
+            docker compose build --no-cache
+            docker compose down
 
-          # 기존 컨테이너 내리기
-          docker compose down
+            # env_file 생성 (민감·환경별 값만)
+            cat > env_file <<EOF
+            SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
+            SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
+            SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
+            SPRING_JWT_SECRET=${{ secrets.SPRING_JWT_SECRET }}
+            SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID }}
+            SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET }}
+            SPRING_DATA_REDIS_HOST=${{ secrets.SPRING_DATA_REDIS_HOST }}
+            SPRING_DATA_REDIS_PORT=${{ secrets.SPRING_DATA_REDIS_PORT }}
+            SPRING_DATA_REDIS_PASSWORD=${{ secrets.SPRING_DATA_REDIS_PASSWORD }}
+            SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}
+            SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}
+            CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}
+            CLOUD_AWS_CREDENTIALS_ACCESS_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESS_KEY }}
+            CLOUD_AWS_CREDENTIALS_SECRET_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRET_KEY }}
+            SPRING_AI_OPENAI_API_KEY=${{ secrets.SPRING_AI_OPENAI_API_KEY }}
+            SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}
+            EOF
 
-          # env_file 생성 (민감·환경별 값만)
-          cat > env_file <<EOF
-  SPRING_DATASOURCE_URL=${{ secrets.SPRING_DATASOURCE_URL }}
-  SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}
-  SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}
-  SPRING_JWT_SECRET=${{ secrets.SPRING_JWT_SECRET }}
-  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_ID }}
-  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET=${{ secrets.SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_GOOGLE_CLIENT_SECRET }}
-  SPRING_DATA_REDIS_HOST=${{ secrets.SPRING_DATA_REDIS_HOST }}
-  SPRING_DATA_REDIS_PORT=${{ secrets.SPRING_DATA_REDIS_PORT }}
-  SPRING_DATA_REDIS_PASSWORD=${{ secrets.SPRING_DATA_REDIS_PASSWORD }}
-  SPRING_MAIL_USERNAME=${{ secrets.SPRING_MAIL_USERNAME }}
-  SPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }}
-  CLOUD_AWS_S3_BUCKET=${{ secrets.CLOUD_AWS_S3_BUCKET }}
-  CLOUD_AWS_CREDENTIALS_ACCESS_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_ACCESS_KEY }}
-  CLOUD_AWS_CREDENTIALS_SECRET_KEY=${{ secrets.CLOUD_AWS_CREDENTIALS_SECRET_KEY }}
-  SPRING_AI_OPENAI_API_KEY=${{ secrets.SPRING_AI_OPENAI_API_KEY }}
-  SPRING_FRONT_URI=${{ secrets.SPRING_FRONT_URI }}
-  EOF
-  
-  # 새 이미지로 컨테이너 재기동
-  docker compose --env-file env_file up -d
-  
-  # 정리: 사용 안 하는 이미지·env_file 삭제
-  docker image prune -f
-  rm env_file
+            # 새 이미지로 컨테이너 기동
+            docker compose --env-file env_file up -d
+
+            # 정리
+            docker image prune -f
+            rm env_file

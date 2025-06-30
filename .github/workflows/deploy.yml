@@ -51,12 +51,14 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             set -e
+            pwd
             cd ~/wooms_backend
             
             # Docker 이미지 빌드 & 이전 컨테이너 내리기
             docker compose build --no-cache
             docker compose down
             
+            pwd
             cd ~/wooms_backend
             
             # env_file 생성 (echo 사용)

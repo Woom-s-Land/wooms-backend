@@ -43,7 +43,7 @@ public class SecurityConfig {
         return web -> web
                 .ignoring()
                 .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**"
-                ,"/actuator/**", "/images/**", "/js/**", "/css/**", "/ws/**");
+                ,"/actuator/**", "/images/**", "/js/**", "/css/**", "/ws/**", "/grafana/**");
     }
 
     private static final String[] WHITE_LIST = {

@@ -71,6 +71,11 @@ public class WoomsService {
         Enrollment newEnrollment = Enrollment.of(user, targetWooms, EnrollmentStatus.WAITING);
         enrollmentRepository.save(newEnrollment);
 
+        // 3반 수락
+        if(woomsInviteCode.equals("c7ceba43-a460-4e83-91ae-05995732aecf")){
+            patchEnrolledUsers(currentUser, targetWooms.getId(), String.valueOf(user.getUuid()), WoomsEnrollRequest.builder().status(EnrollmentStatus.WAITING).build());
+        }
+
         return new CommonResponse("ok");
     }
 
@@ -118,7 +123,7 @@ public class WoomsService {
 
         List<Enrollment> acceptedEnrollments = enrollmentRepository.findByPkWoomsIdAndStatus(woomsId, EnrollmentStatus.ACCEPT);
 
-        if (acceptedEnrollments.size() >= 12) {
+        if (acceptedEnrollments.size() >= 31) {
             throw new WoomsEnrollmentLimitExceededException();
         }
 

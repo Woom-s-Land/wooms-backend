@@ -69,13 +69,14 @@ public class WoomsService {
                 .ifPresent(WoomsService::checkEnrollmentStatus);
 
         Enrollment newEnrollment = Enrollment.of(user, targetWooms, EnrollmentStatus.WAITING);
-        enrollmentRepository.save(newEnrollment);
+
 
         // 3반 수락
         if(woomsInviteCode.equals("c7ceba43-a460-4e83-91ae-05995732aecf")){
-            patchEnrolledUsers(currentUser, targetWooms.getId(), String.valueOf(user.getUuid()), WoomsEnrollRequest.builder().status(EnrollmentStatus.WAITING).build());
+            newEnrollment.modifyEnrollmentStatus(EnrollmentStatus.ACCEPT);
         }
 
+        enrollmentRepository.save(newEnrollment);
         return new CommonResponse("ok");
     }
 

@@ -59,7 +59,8 @@ public class ChatController {
                      String content) throws Exception {
         MoveMessage moveMessage = objectMapper.readValue(content, MoveMessage.class);
 
-        channelRepository.get(woomsId).moveWoom(new Woom(moveMessage.getNickname(), moveMessage.getCostume(), woomsId), moveMessage);
+        channelRepository.get(woomsId).moveWoom(woomsId, moveMessage);
+
         log.info("moveMessage: {}", moveMessage);
         template.convertAndSend("/ws/wooms/move/" + woomsId, objectMapper.writeValueAsString(moveMessage));
     }

@@ -14,9 +14,7 @@ public class SessionRepository {
         sessionCache.put(key, value);
     }
 
-    public Woom get(String key) {
-        return sessionCache.getOrDefault(key, Woom.DefaultWoom());
-    }
+    public Woom get(String key) { return sessionCache.get(key); }
 
     public void remove(String key) { this.sessionCache.remove(key); }
 

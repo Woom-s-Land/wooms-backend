@@ -27,21 +27,15 @@ public class ChannelDisconnectListener {
         log.info("Handling disconnect for STOMP session: {}", sessionId);
 
         try {
-            Woom woom = sessionRepository.get(sessionId);
+            Woom woom = sessionRepository.get(sessionId); // ← 아래에서 null 반환하도록 변경 추천
             if (woom != null && woom.getWoomsId() != null) {
                 Channel channel = channelRepository.get(woom.getWoomsId());
                 if (channel != null) {
-                    channel.removeWoom(woom);
-                    channelRepository.put(woom.getWoomsId(), channel);
-
-                    messagingTemplate.convertAndSend(
-                            "/ws/wooms/disconnect/" + woom.getWoomsId(),
-                            woom
-                    );
-
+                    channel.removeWoom(woom); // Map 기준 제거
+                    // put 불필요
+                    messagingTemplate.convertAndSend("/ws/wooms/disconnect/" + woom.getWoomsId(), woom);
                 }
             }
-
             sessionRepository.remove(sessionId);
         } catch (Exception e) {
             log.error("Error handling disconnect: ", e);

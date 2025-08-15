@@ -32,20 +32,26 @@ public class StompChannelInterceptor implements ChannelInterceptor {
         if (accessor != null && StompCommand.CONNECT.equals(accessor.getCommand())) {
             // STOMP 연결 시점
             String sessionId = accessor.getSessionId();
+
             log.info("STOMP Connection - Session ID: {}", sessionId);
 
-            // 토큰 처리
+            // Principal.getName() == sessionId 로 사용
+            accessor.setUser(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(sessionId, null));
+
             String token = accessor.getFirstNativeHeader("Authorization");
+            if (token == null) token = accessor.getFirstNativeHeader("authorization");
+
             if (token != null && jwtUtil.validateToken(token)) {
                 try {
                     String nickname = jwtUtil.getNickname(token);
                     Integer costume = Integer.valueOf(jwtUtil.getCostume(token));
                     String channelUuidStr = jwtUtil.getChannelUuid(token);
-
+                    log.info("channelUUidStr: {}", channelUuidStr);
                     // Woom 객체 생성 및 저장
                     Woom woom = new Woom(nickname, costume, null);
                     if (channelUuidStr != null && !channelUuidStr.isEmpty()) {
                         UUID channelUuid = UUID.fromString(channelUuidStr);
+                        log.info("channelUUid: {}", channelUuid);
                         woom.setWoomsId(channelUuid);
 
                         Channel channels = channelRepository.get(channelUuid);

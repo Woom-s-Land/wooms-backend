@@ -27,30 +27,22 @@ public class ChannelDisconnectListener {
         log.info("Handling disconnect for STOMP session: {}", sessionId);
 
         try {
-            // Get user information from session repository
             Woom woom = sessionRepository.get(sessionId);
             if (woom != null && woom.getWoomsId() != null) {
-                // Remove from channel
                 Channel channel = channelRepository.get(woom.getWoomsId());
                 if (channel != null) {
                     channel.removeWoom(woom);
                     channelRepository.put(woom.getWoomsId(), channel);
 
-                    // Notify others about disconnection
                     messagingTemplate.convertAndSend(
                             "/ws/wooms/disconnect/" + woom.getWoomsId(),
                             woom
                     );
 
-                    log.info("Removed user {} from channel {}",
-                            woom.getNickname(), woom.getWoomsId());
                 }
             }
 
-            // Clean up session
             sessionRepository.remove(sessionId);
-            log.info("Cleaned up session: {}", sessionId);
-
         } catch (Exception e) {
             log.error("Error handling disconnect: ", e);
         }

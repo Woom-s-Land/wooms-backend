@@ -13,6 +13,7 @@ import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
+import org.springframework.messaging.support.NativeMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -34,6 +35,13 @@ public class StompChannelInterceptor implements ChannelInterceptor {
             String sessionId = accessor.getSessionId();
 
             log.info("STOMP Connection - Session ID: {}", sessionId);
+            Object nativeHeadersObj = accessor.getMessageHeaders().get(NativeMessageHeaderAccessor.NATIVE_HEADERS);
+            if (nativeHeadersObj instanceof java.util.Map<?, ?> map) {
+                log.info("일단 들어옴");
+                @SuppressWarnings("unchecked")
+                var nativeHeaders = (java.util.Map<String, java.util.List<String>>) map;
+                nativeHeaders.forEach((k, v) -> log.info("STOMP native header [{}] = {}", k, v));
+            }
 
             // Principal.getName() == sessionId 로 사용
             accessor.setUser(new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(sessionId, null));

@@ -29,21 +29,21 @@ public class ChatController {
     private final SimpMessagingTemplate template;
     private final ChannelRepository channelRepository;
 
-    @PostMapping("/api/join/{woomsId}")
-    public CommonResponse join(@PathVariable("woomsId") UUID woomsId) {
-        Channel channel = channelRepository.get(woomsId);
-        channel.getWooms().forEach(woom1 ->
-                {
-                    try {
-                        log.info("woom : {} ", MoveMessage.of(woom1));
-                        template.convertAndSend("/ws/wooms/move/" + woomsId, objectMapper.writeValueAsString(MoveMessage.of(woom1)));
-                    } catch (JsonProcessingException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-        );
-        return new CommonResponse("ok");
-    }
+//    @PostMapping("/api/join/{woomsId}")
+//    public CommonResponse join(@PathVariable("woomsId") UUID woomsId) {
+//        Channel channel = channelRepository.get(woomsId);
+//        channel.getWooms().forEach(woom1 ->
+//                {
+//                    try {
+//                        log.info("woom : {} ", MoveMessage.of(woom1));
+//                        template.convertAndSend("/ws/wooms/move/" + woomsId, objectMapper.writeValueAsString(MoveMessage.of(woom1)));
+//                    } catch (JsonProcessingException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//        );
+//        return new CommonResponse("ok");
+//    }
 
     @MessageMapping("/chat/{woomsId}")
     public void sendMessage(@DestinationVariable("woomsId") UUID woomsId,

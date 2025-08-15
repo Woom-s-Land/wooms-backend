@@ -4,17 +4,17 @@ name: Backend CI/CD to EC2
 
 on:
   push:
-    branches: [ 'develop#2' ]
+    branches: [ 'fix#160' ]
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout develop#2
+      - name: Checkout fix#160
         uses: actions/checkout@v3
         with:
-          ref: 'develop#2'
+          ref: 'fix#160'
 
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew

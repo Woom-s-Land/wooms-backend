@@ -9,14 +9,15 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class ChannelRepository {
-    private ConcurrentMap<UUID, Channel> channelCache = new ConcurrentHashMap<>();
+    private final ConcurrentMap<UUID, Channel> channelCache = new ConcurrentHashMap<>();
 
     public void put(UUID key, Channel value) {
         channelCache.put(key, value);
     }
 
     public Channel get(UUID key) {
-        return channelCache.getOrDefault(key, new Channel());
+        return channelCache.computeIfAbsent(key, k -> new Channel());
+//        return channelCache.getOrDefault(key, new Channel());
     }
     public void remove(UUID key) { this.channelCache.remove(key); }
 

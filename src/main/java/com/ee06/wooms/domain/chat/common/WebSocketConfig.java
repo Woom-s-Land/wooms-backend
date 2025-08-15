@@ -19,6 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     private final StompChannelInterceptor stompChannelInterceptor;
     private final StompErrorHandler errorHandler;
+    private final JwtHandshakeInterceptor jwtHandshakeInterceptor;
 
     @Bean
     public ThreadPoolTaskScheduler wsTaskScheduler() {
@@ -33,6 +34,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.setErrorHandler(errorHandler)
                 .addEndpoint("/ws")
+                .addInterceptors(jwtHandshakeInterceptor)
             .setAllowedOrigins("http://localhost:5173","http://localhost:3000","https://wooms.duckdns.org");
     }
 

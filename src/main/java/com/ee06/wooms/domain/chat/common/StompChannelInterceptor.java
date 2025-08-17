@@ -42,7 +42,6 @@ public class StompChannelInterceptor implements ChannelInterceptor {
                 try { valid = jwtUtil.validateToken(token); }
                 catch (Exception e) { log.warn("JWT validate failed: {}", e.getMessage()); }
             }
-            log.info("[CONNECT] tokenPresent={}, valid={}", token != null, valid);
 
             if (valid) {
                 try {

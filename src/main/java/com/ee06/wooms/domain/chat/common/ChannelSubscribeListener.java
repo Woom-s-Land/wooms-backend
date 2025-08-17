@@ -34,14 +34,12 @@ public class ChannelSubscribeListener {
         String idStr = destination.substring(prefix.length());
         UUID woomsId = UUID.fromString(idStr);
         Channel channel = channelRepository.get(woomsId);
-
         channel.getWooms().forEach(woom -> {
             template.convertAndSendToUser(
                     principal.getName(),
                     "/queue/init",
                     MoveMessage.of(woom)
             );
-            log.info("개인 큐 발송 !");
         });
     }
 }

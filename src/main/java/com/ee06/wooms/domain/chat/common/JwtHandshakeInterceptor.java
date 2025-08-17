@@ -43,7 +43,6 @@ public class JwtHandshakeInterceptor implements HandshakeInterceptor {
 
                     if (value != null && !value.isBlank()) {
                         attrs.put(ATTR_JWT_TOKEN, value);
-                        log.info("[HS] Found JWT cookie: {} (len={})", COOKIE_NAME, value.length());
                     } else {
                         log.info("[HS] {} cookie present but empty", COOKIE_NAME);
                     }

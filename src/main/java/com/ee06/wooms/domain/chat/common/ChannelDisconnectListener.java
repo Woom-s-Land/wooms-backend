@@ -31,14 +31,13 @@ public class ChannelDisconnectListener {
         var principal = headerAccessor.getUser();
         try {
             Woom woom = sessionRepository.get(sessionId);
-            log.info("sessionId: {}", sessionId);
-            log.info("woomsId: {}", woom.getWoomsId());
+//            log.info("sessionId: {}", sessionId);
+//            log.info("woomsId: {}", woom.getWoomsId());
             if (woom != null && woom.getWoomsId() != null) {
                 Channel channel = channelRepository.get(woom.getWoomsId());
-                log.info("channel: {}", channel);
+//                log.info("channel: {}", channel);
                 if (channel != null) {
                     channel.removeWoom(woom);
-                    log.info("Removed woom: {}", woom.getWoomsId());
                     messagingTemplate.convertAndSend("/ws/wooms/disconnect/" + woom.getWoomsId(), woom);
                 }
                 channel.getWooms().forEach(tempWoom -> {
@@ -47,7 +46,6 @@ public class ChannelDisconnectListener {
                             "/queue/init",
                             MoveMessage.of(tempWoom)
                     );
-                    log.info("개인 큐 발송 !");
                 });
             }
 

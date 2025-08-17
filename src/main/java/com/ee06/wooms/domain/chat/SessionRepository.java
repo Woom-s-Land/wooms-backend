@@ -8,15 +8,13 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class SessionRepository {
-    private ConcurrentMap<String, Woom> sessionCache = new ConcurrentHashMap<>();
+    private final ConcurrentMap<String, Woom> sessionCache = new ConcurrentHashMap<>();
 
     public void put(String key, Woom value) {
         sessionCache.put(key, value);
     }
 
-    public Woom get(String key) {
-        return sessionCache.getOrDefault(key, Woom.DefaultWoom());
-    }
+    public Woom get(String key) { return sessionCache.get(key); }
 
     public void remove(String key) { this.sessionCache.remove(key); }
 

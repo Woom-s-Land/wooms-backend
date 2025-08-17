@@ -2,6 +2,7 @@ package com.ee06.wooms.domain.chat.common;
 
 import com.ee06.wooms.domain.chat.ChannelRepository;
 import com.ee06.wooms.domain.chat.SessionRepository;
+import com.ee06.wooms.domain.chat.dto.MoveMessage;
 import com.ee06.wooms.domain.chat.entity.Channel;
 import com.ee06.wooms.domain.chat.entity.Woom;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.UUID;
 
 @Slf4j
 @Component
@@ -25,32 +28,28 @@ public class ChannelDisconnectListener {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
         log.info("Handling disconnect for STOMP session: {}", sessionId);
-
+        var principal = headerAccessor.getUser();
         try {
-            // Get user information from session repository
             Woom woom = sessionRepository.get(sessionId);
+//            log.info("sessionId: {}", sessionId);
+//            log.info("woomsId: {}", woom.getWoomsId());
             if (woom != null && woom.getWoomsId() != null) {
-                // Remove from channel
                 Channel channel = channelRepository.get(woom.getWoomsId());
+//                log.info("channel: {}", channel);
                 if (channel != null) {
                     channel.removeWoom(woom);
-                    channelRepository.put(woom.getWoomsId(), channel);
-
-                    // Notify others about disconnection
-                    messagingTemplate.convertAndSend(
-                            "/ws/wooms/disconnect/" + woom.getWoomsId(),
-                            woom
-                    );
-
-                    log.info("Removed user {} from channel {}",
-                            woom.getNickname(), woom.getWoomsId());
+                    messagingTemplate.convertAndSend("/ws/wooms/disconnect/" + woom.getWoomsId(), woom);
                 }
+                channel.getWooms().forEach(tempWoom -> {
+                    messagingTemplate.convertAndSendToUser(
+                            principal.getName(),
+                            "/queue/init",
+                            MoveMessage.of(tempWoom)
+                    );
+                });
             }
 
-            // Clean up session
             sessionRepository.remove(sessionId);
-            log.info("Cleaned up session: {}", sessionId);
-
         } catch (Exception e) {
             log.error("Error handling disconnect: ", e);
         }

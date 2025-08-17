@@ -14,6 +14,8 @@ import org.springframework.messaging.support.MessageHeaderAccessor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -47,8 +49,9 @@ public class StompChannelInterceptor implements ChannelInterceptor {
                     String nickname = jwtUtil.getNickname(token);
                     Integer costume = Integer.valueOf(jwtUtil.getCostume(token));
                     // woomsId는 SUBSCRIBE 경로에서 확정
-                    sessionRepository.put(sessionId, new Woom(nickname, costume, null));
-                    log.info("Session bound: {} -> {}", sessionId, nickname);
+                    String channelUuid = jwtUtil.getChannelUuid(token);
+                    sessionRepository.put(sessionId, new Woom(nickname, costume, UUID.fromString(channelUuid)));
+                    log.info("Session bound: {} -> {}, {}", sessionId, nickname, channelUuid);
                 } catch (Exception e) {
                     log.error("JWT parse error", e);
                 }

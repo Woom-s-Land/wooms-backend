@@ -44,6 +44,8 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
+	implementation "org.springframework.boot:spring-boot-starter-aop"
+	implementation "net.logstash.logback:logstash-logback-encoder:7.4"
 
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'

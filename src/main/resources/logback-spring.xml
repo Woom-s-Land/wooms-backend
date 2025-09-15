@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="APP" source="spring.application.name" defaultValue="wooms-backend"/>
+
+    <appender name="JSON_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp/>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <message/>
+                <mdc/>
+                <arguments/>
+                <stackTrace/>
+                <context><contextName>${APP}</contextName></context>
+            </providers>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>8192</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="JSON_STDOUT"/>
+    </appender>
+
+    <logger name="http.request" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_JSON"/>
+    </logger>
+    <logger name="business.event" level="INFO" additivity="false">
+        <appender-ref ref="ASYNC_JSON"/>
+    </logger>
+    <logger name="http.error" level="ERROR" additivity="false">
+        <appender-ref ref="ASYNC_JSON"/>
+    </logger>
+
+    <root level="WARN">
+        <appender-ref ref="ASYNC_JSON"/>
+    </root>
+</configuration>

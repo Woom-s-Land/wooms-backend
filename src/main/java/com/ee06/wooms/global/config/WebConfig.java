@@ -1,21 +1,14 @@
 package com.ee06.wooms.global.config;
 
-import com.ee06.wooms.global.config.filter.CorsFilter;
-import jakarta.servlet.Filter;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * CORS is handled by Spring Security via http.cors() + the CorsConfigurationSource
+ * bean in {@link CorsConfig}. The old manual CorsFilter registration was removed
+ * because it ran inside the security chain (so it missed security-terminated
+ * responses like login success) and duplicated CORS headers.
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Bean
-    public FilterRegistrationBean servletCorsFilter(){
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new CorsFilter());
-        filterRegistrationBean.setOrder(0);
-        filterRegistrationBean.addUrlPatterns("/*");
-
-        return filterRegistrationBean;
-    }
 }

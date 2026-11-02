@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "checks": [
+    "authenticated chat broadcasts with server nickname",
+    "move presence init, server identity, and broadcast",
+    "sketch drawing, late-join snapshot, archive, gallery persistence",
+    "periodic service-authenticated wall flush",
+    "new room creation and isolated chat delivery",
+    "existing but unjoined room subscription denied and closed",
+    "anonymous public subscription denied",
+    "bad Origin rejected",
+    "mafia private roles, phases, vote, guess, result secrecy",
+    "nonexistent room subscription denied",
+    "disconnect removes the owning room presence"
+  ],
+  "rooms": {
+    "chatMoveSketch": "00000000-0000-0000-0000-000000000001",
+    "mafia": "00000000-0000-0000-0000-000000000001",
+    "isolated": "1f935139-c0fc-4366-bbc8-7fda0c81771e"
+  },
+  "clients": 7
+}

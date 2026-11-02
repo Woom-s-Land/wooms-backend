@@ -71,6 +71,11 @@ public class JWTUtil {
                 .get("costume", String.class);
     }
 
+    public long getExpiresAt(String token) {
+        return Jwts.parser().verifyWith(secretKey).build()
+                .parseSignedClaims(token).getPayload().getExpiration().getTime();
+    }
+
     public String generateAccessToken(String uuid, String nickname, String costume, String channelUuid) {
         return Jwts.builder()
                 .subject("access-token")

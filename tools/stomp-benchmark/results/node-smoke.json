@@ -1,0 +1,54 @@
+{
+  "runId": "fbbe18c4-6195-44cb-ad31-6ebcbdc9f1bf",
+  "url": "ws://127.0.0.1:18080/ws",
+  "anonymous": true,
+  "clock": {
+    "name": "performance.now()",
+    "monotonic": true
+  },
+  "connections": 2,
+  "probeCompletedConnections": 2,
+  "liveConnectionsAtReport": 2,
+  "roomSize": 2,
+  "rooms": 1,
+  "targetIngressMsgPerSec": 10,
+  "warmupSeconds": 1,
+  "measureSeconds": 3,
+  "drainSeconds": 2,
+  "actualSendWindowSeconds": 3.007,
+  "ingressMessages": 30,
+  "ingressMsgPerSec": 10,
+  "expectedFanoutDeliveries": 60,
+  "measurementWindowUniqueDeliveries": 60,
+  "measurementWindowFanoutDeliveriesPerSec": 20,
+  "windowExpectedDeliveries": 60,
+  "drainCompleteUniqueReceived": 60,
+  "missingAfterDrain": 0,
+  "duplicatesAfterDrain": 0,
+  "errors": [],
+  "sendErrors": 0,
+  "connectionClose": [],
+  "measurementCohortLatencyMs": {
+    "p50": 1.784,
+    "p95": 2.744,
+    "p99": 3.318
+  },
+  "senderScheduleLagMs": {
+    "max": 15.35489999999993,
+    "p50": 5.748,
+    "p95": 14.316,
+    "p99": 15.355
+  },
+  "generator": {
+    "eventLoopLagMs": {
+      "minMs": 9.191,
+      "maxMs": 25.068,
+      "meanMs": 15.84,
+      "p50Ms": 15.712,
+      "p95Ms": 17.924,
+      "p99Ms": 23.151,
+      "samples": 378
+    },
+    "bufferedAmountMax": 250
+  }
+}

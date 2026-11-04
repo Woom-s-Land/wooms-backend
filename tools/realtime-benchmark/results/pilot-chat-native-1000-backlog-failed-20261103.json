@@ -1,0 +1,203 @@
+{
+  "ok": false,
+  "runId": "7784cf5f-e847-4f02-8f48-e970fc968bf2",
+  "mode": "native",
+  "workload": "chat",
+  "profile": {
+    "workerCount": 4,
+    "roomsPerWorker": 25,
+    "usersPerRoom": 10,
+    "connections": 1000,
+    "totalTargetMsgPerSecond": 1000,
+    "workerTargetMsgPerSecond": 250,
+    "warmupSeconds": 5,
+    "measurementSeconds": 20,
+    "drainSeconds": 10
+  },
+  "coordination": {
+    "startEpochMs": null,
+    "workersReady": 0,
+    "workersCompleted": 0,
+    "readinessTimeoutMs": 120000,
+    "watchdogMs": 90000,
+    "watchdogTriggered": false
+  },
+  "connections": {
+    "attempted": 1000,
+    "readinessProbeComplete": 0,
+    "liveBeforeCleanup": 0,
+    "closedDuringRun": 0,
+    "readyRoomSlots": 0
+  },
+  "ingress": {
+    "targetMessages": 20000,
+    "successfulCohortMessages": 0,
+    "actualMsgPerSecond": 0,
+    "targetAttainment": 0,
+    "applicationBodyBytes": 0,
+    "protocolTextBytes": 0,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+    "workerPacingLagMs": [
+      {
+        "workerId": "1",
+        "pid": 32364,
+        "lag": null
+      },
+      {
+        "workerId": "2",
+        "pid": 31572,
+        "lag": null
+      },
+      {
+        "workerId": "3",
+        "pid": 41152,
+        "lag": null
+      },
+      {
+        "workerId": "4",
+        "pid": 17556,
+        "lag": null
+      }
+    ]
+  },
+  "delivery": {
+    "expectedFanoutDeliveryCount": 0,
+    "uniqueDeliveriesInMeasurementWindow": 0,
+    "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+    "uniqueDeliveriesTotalThroughDrain": 0,
+    "missingAfterDrain": 0,
+    "lateBeyondDrain": 0,
+    "duplicateDeliveries": 0,
+    "unexpectedRecipients": 0,
+    "sequenceReversals": 0,
+    "unmatchedDeliveries": 0,
+    "correlatedProtocolTextBytesReceived": 0,
+    "latencyMsPooledFromAllWorkerSamples": {
+      "samples": 0,
+      "p50": null,
+      "p95": null,
+      "p99": null,
+      "max": null,
+      "missingWorkerFiles": []
+    }
+  },
+  "generator": {
+    "workerProcessCpuMs": {
+      "userMs": 0,
+      "systemMs": 0,
+      "totalMs": 0
+    },
+    "workerSummaries": [
+      {
+        "workerId": "1",
+        "pid": 32364,
+        "ok": false,
+        "connections": null,
+        "ingress": null,
+        "delivery": null,
+        "generator": null,
+        "failure": "Only 94/250 clients completed protocol connection; failures={\"ECONNREFUSED\":156}worker failed: Only 94/250 clients completed protocol connection; failures={\"ECONNREFUSED\":156}\n",
+        "exitCode": 1
+      },
+      {
+        "workerId": "2",
+        "pid": 31572,
+        "ok": false,
+        "connections": null,
+        "ingress": null,
+        "delivery": null,
+        "generator": null,
+        "failure": "Only 103/250 clients completed protocol connection; failures={\"ECONNREFUSED\":147}worker failed: Only 103/250 clients completed protocol connection; failures={\"ECONNREFUSED\":147}\n",
+        "exitCode": 1
+      },
+      {
+        "workerId": "3",
+        "pid": 41152,
+        "ok": false,
+        "connections": null,
+        "ingress": null,
+        "delivery": null,
+        "generator": null,
+        "failure": "Only 106/250 clients completed protocol connection; failures={\"ECONNREFUSED\":144}worker failed: Only 106/250 clients completed protocol connection; failures={\"ECONNREFUSED\":144}\n",
+        "exitCode": 1
+      },
+      {
+        "workerId": "4",
+        "pid": 17556,
+        "ok": false,
+        "connections": null,
+        "ingress": null,
+        "delivery": null,
+        "generator": null,
+        "failure": "Only 96/250 clients completed protocol connection; failures={\"ECONNREFUSED\":154}worker failed: Only 96/250 clients completed protocol connection; failures={\"ECONNREFUSED\":154}\n",
+        "exitCode": 1
+      }
+    ]
+  },
+  "resources": {
+    "sampleCount": 0,
+    "sampleWindowStartEpochMs": null,
+    "sampleWindowEndEpochMs": null,
+    "firstSampleEpochMs": null,
+    "lastSampleEpochMs": null,
+    "firstSampleOffsetFromStartMs": null,
+    "lastSampleOffsetFromEndMs": null,
+    "logicalProcessors": 18,
+    "cpuNormalization": "Process CPU: 100% equals one logical core. Host busy percent is normalized across all reported logical processors; hostBusyOneCoreEquivalentPercent multiplies it by the logical processor count.",
+    "serverPids": [
+      22684,
+      45876
+    ],
+    "workerPids": [
+      32364,
+      31572,
+      41152,
+      17556
+    ],
+    "serverProcessCpuSeconds": 0,
+    "workerProcessCpuSeconds": 0,
+    "serverPeakPrivateBytes": 0,
+    "serverPeakWorkingSetBytes": 0,
+    "workerPeakPrivateBytes": 0,
+    "workerPeakWorkingSetBytes": 0,
+    "serverPeakAggregation": "maximum same-sample sum across listed server PIDs",
+    "processSamples": [],
+    "hostBusyPercentOfLogicalProcessorsAverage": null,
+    "hostBusyPercentOfLogicalProcessorsMax": null,
+    "hostBusyOneCoreEquivalentPercentMax": null,
+    "rawSamplesTemp": "C:\\Users\\enssels\\AppData\\Local\\Temp\\realtimecompare-coordinator-7784cf5f-e847-4f02-8f48-e970fc968bf2-bx0tFU\\resources.jsonl",
+    "samplerExitCode": null
+  },
+  "failures": [
+    {
+      "workerId": "1",
+      "pid": 32364,
+      "failure": "Only 94/250 clients completed protocol connection; failures={\"ECONNREFUSED\":156}worker failed: Only 94/250 clients completed protocol connection; failures={\"ECONNREFUSED\":156}\n",
+      "exitCode": 1,
+      "summaryOk": null
+    },
+    {
+      "workerId": "2",
+      "pid": 31572,
+      "failure": "Only 103/250 clients completed protocol connection; failures={\"ECONNREFUSED\":147}worker failed: Only 103/250 clients completed protocol connection; failures={\"ECONNREFUSED\":147}\n",
+      "exitCode": 1,
+      "summaryOk": null
+    },
+    {
+      "workerId": "3",
+      "pid": 41152,
+      "failure": "Only 106/250 clients completed protocol connection; failures={\"ECONNREFUSED\":144}worker failed: Only 106/250 clients completed protocol connection; failures={\"ECONNREFUSED\":144}\n",
+      "exitCode": 1,
+      "summaryOk": null
+    },
+    {
+      "workerId": "4",
+      "pid": 17556,
+      "failure": "Only 96/250 clients completed protocol connection; failures={\"ECONNREFUSED\":154}worker failed: Only 96/250 clients completed protocol connection; failures={\"ECONNREFUSED\":154}\n",
+      "exitCode": 1,
+      "summaryOk": null
+    }
+  ],
+  "preparationFailure": "worker-4-failed-before-ready",
+  "resourceSamplerOk": false
+}

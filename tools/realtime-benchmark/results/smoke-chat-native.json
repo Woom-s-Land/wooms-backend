@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "runId": "8b386d54-471b-461d-be01-c7356163ecd6",
+  "mode": "native",
+  "workload": "chat",
+  "workerId": "smoke-native-chat",
+  "roomStart": 0,
+  "roomCount": 2,
+  "connections": {
+    "attempted": 20,
+    "connected": 20,
+    "readinessProbeComplete": 20,
+    "liveBeforeCleanup": 20,
+    "closedDuringRun": 0
+  },
+  "subscriptions": {
+    "perRoomReady": [
+      10,
+      10
+    ],
+    "totalReadyFanoutSlots": 20
+  },
+  "scheduler": {
+    "aborted": false,
+    "abortReason": null,
+    "targetMessages": 300,
+    "targetAttainment": 1.00333,
+    "measurementWindowCompleted": true
+  },
+  "timingSeconds": {
+    "warmup": 1,
+    "measurement": 3,
+    "drain": 2,
+    "measurementStartMonotonicMs": 1317.37,
+    "measurementEndMonotonicMs": 4317.37,
+    "measurementStartEpochMs": 1793608346867,
+    "measurementEndEpochMs": 1793608349867,
+    "measurementActualWallSeconds": 3,
+    "lateObservationMs": 100,
+    "deadlineSemantics": "[measurementStart, measurementEnd) and [measurementEnd, drainEnd)"
+  },
+  "ingress": {
+    "targetMsgPerSecond": 100,
+    "successfulCohortMessages": 301,
+    "actualCohortMsgPerSecond": 100.3333,
+    "attemptedMessagesAllPhases": 400,
+    "successfulMessagesAllPhases": 400,
+    "failedSends": 0,
+    "pacingLagMs": {
+      "p50": 6.798,
+      "p95": 13.8628,
+      "p99": 14.8156,
+      "max": 15.732
+    },
+    "applicationBodyBytes": 58570,
+    "protocolTextBytes": 85058,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+    "sampleApplicationBodyBytes": 193,
+    "sampleProtocolTextBytes": 281
+  },
+  "delivery": {
+    "expectedFanoutDeliveryCount": 3010,
+    "uniqueDeliveriesInMeasurementWindow": 3010,
+    "measurementWindowUniqueDeliveryPerSecond": 1003.3333,
+    "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+    "uniqueDeliveriesTotalThroughDrain": 3010,
+    "missingAfterDrain": 0,
+    "lateBeyondDrain": 0,
+    "deliveryBeforeMeasurement": 0,
+    "duplicateDeliveries": 0,
+    "unexpectedRecipients": 0,
+    "sequenceReversals": 0,
+    "latencyMs": {
+      "p50": 0.8773,
+      "p95": 1.4629,
+      "p99": 1.9644,
+      "max": 2.9667
+    },
+    "correlatedProtocolTextBytesReceived": 1071820,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+  },
+  "generator": {
+    "cpuUserMs": 250,
+    "cpuSystemMs": 78,
+    "processCpuMs": 328,
+    "measurementWindow": true,
+    "rssBytesAtMeasurementEnd": 58482688,
+    "rssBytesMaxSampledDuringMeasurement": 58814464,
+    "heapUsedBytesAtMeasurementEnd": 9755024,
+    "heapUsedBytesMaxSampledDuringMeasurement": 11861840,
+    "eventLoopDelayMs": {
+      "p50": 15.6221,
+      "p95": 16.8264,
+      "p99": 17.5145,
+      "max": 19.8902
+    },
+    "aggregateBufferedAmountMaxBytes": 0,
+    "aggregateBufferedAmountMaxSampledBytes": 0,
+    "bufferedAmountLimitBytes": 67108864,
+    "bufferLimitExceeded": false,
+    "probeMessagesSent": 38,
+    "setupProbeBodyBytesSent": 6156,
+    "setupProbeProtocolTextBytesSent": 9500
+  },
+  "errors": {
+    "total": 0,
+    "bySafeCode": {},
+    "unmatchedDeliveries": 0,
+    "sendFailures": 0
+  },
+  "rawLatencyFileTemp": "C:\\Users\\enssels\\AppData\\Local\\Temp\\realtimecompare-latency-8b386d54-471b-461d-be01-c7356163ecd6-native-chat-workersmoke-native-chat.csv"
+}

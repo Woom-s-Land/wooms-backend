@@ -18,6 +18,8 @@
 
 ### - [기술 스택](#기술-스택)
 
+### - [실시간 권한 철회](#실시간-권한-철회)
+
 ### - [팀원 구성](#팀원-구성)
 
 ### - [회고](#회고)
@@ -121,6 +123,12 @@
 ### TOOLS
 
 <img src="./readme/stack/tool_stack.jpg" />
+
+## 실시간 권한 철회
+
+기존 `DELETE /api/wooms/{woomsId}/users` 경로에서 가입 상태가 `ACCEPT`에서 `REFUSE`로 바뀌고 DB transaction이 commit되면 `ROOM_ACCESS_REVOKED` Redis Pub/Sub 이벤트를 발행합니다. 이벤트에는 버전, event ID, 초대 코드 UUID, 사용자 UUID, 사유와 시각만 들어가며 쿠키·JWT는 포함하지 않습니다. 발행은 bounded 비동기 relay를 거치므로 Redis 장애가 이미 commit된 탈퇴 응답을 실패로 바꾸지 않습니다.
+
+Pub/Sub은 영속 큐가 아니며 transactional outbox도 이번 구현에 포함하지 않았습니다. 이벤트가 유실되거나 Redis가 연결되지 않으면 Netty의 30–60초 분산 backend 재검증이 권한 철회를 보완합니다. 연결은 60초 cache 만료 전에도 재검증될 수 있으며, 일시적 backend 장애는 권한을 연장하지 않고 연결을 닫습니다. 실제 운영 동작은 backend와 Netty 양쪽 `WOOMS_REALTIME_ACCESS_EVENTS_ENABLED` 및 `WOOMS_REALTIME_ACCESS_CHANNEL` 값, Redis 접속 설정이 일치해야 합니다.
 
 ## 팀원 구성
 

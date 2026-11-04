@@ -1,0 +1,112 @@
+{
+  "ok": true,
+  "runId": "3ed42d5b-441a-45a1-b335-ce6e0d105ed6",
+  "mode": "stomp",
+  "workload": "sketch",
+  "workerId": "smoke-stomp-sketch",
+  "roomStart": 0,
+  "roomCount": 2,
+  "connections": {
+    "attempted": 20,
+    "connected": 20,
+    "readinessProbeComplete": 20,
+    "liveBeforeCleanup": 20,
+    "closedDuringRun": 0
+  },
+  "subscriptions": {
+    "perRoomReady": [
+      10,
+      10
+    ],
+    "totalReadyFanoutSlots": 20
+  },
+  "scheduler": {
+    "aborted": false,
+    "abortReason": null,
+    "targetMessages": 300,
+    "targetAttainment": 1,
+    "measurementWindowCompleted": true
+  },
+  "timingSeconds": {
+    "warmup": 1,
+    "measurement": 3,
+    "drain": 2,
+    "measurementStartMonotonicMs": 1195.682,
+    "measurementEndMonotonicMs": 4195.682,
+    "measurementStartEpochMs": 1793608380976,
+    "measurementEndEpochMs": 1793608383976,
+    "measurementActualWallSeconds": 3,
+    "lateObservationMs": 100,
+    "deadlineSemantics": "[measurementStart, measurementEnd) and [measurementEnd, drainEnd)"
+  },
+  "ingress": {
+    "targetMsgPerSecond": 100,
+    "successfulCohortMessages": 300,
+    "actualCohortMsgPerSecond": 100,
+    "attemptedMessagesAllPhases": 399,
+    "successfulMessagesAllPhases": 399,
+    "failedSends": 0,
+    "pacingLagMs": {
+      "p50": 6.4834,
+      "p95": 13.5652,
+      "p99": 15.1622,
+      "max": 15.3714
+    },
+    "applicationBodyBytes": 19099,
+    "protocolTextBytes": 58999,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+    "sampleApplicationBodyBytes": 63,
+    "sampleProtocolTextBytes": 196
+  },
+  "delivery": {
+    "expectedFanoutDeliveryCount": 3000,
+    "uniqueDeliveriesInMeasurementWindow": 3000,
+    "measurementWindowUniqueDeliveryPerSecond": 1000,
+    "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+    "uniqueDeliveriesTotalThroughDrain": 3000,
+    "missingAfterDrain": 0,
+    "lateBeyondDrain": 0,
+    "deliveryBeforeMeasurement": 0,
+    "duplicateDeliveries": 0,
+    "unexpectedRecipients": 0,
+    "sequenceReversals": 0,
+    "latencyMs": {
+      "p50": 1.06,
+      "p95": 1.6692,
+      "p99": 1.9813,
+      "max": 2.407
+    },
+    "correlatedProtocolTextBytesReceived": 810490,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+  },
+  "generator": {
+    "cpuUserMs": 203,
+    "cpuSystemMs": 78,
+    "processCpuMs": 281,
+    "measurementWindow": true,
+    "rssBytesAtMeasurementEnd": 58785792,
+    "rssBytesMaxSampledDuringMeasurement": 58904576,
+    "heapUsedBytesAtMeasurementEnd": 9503360,
+    "heapUsedBytesMaxSampledDuringMeasurement": 11849768,
+    "eventLoopDelayMs": {
+      "p50": 15.4993,
+      "p95": 16.6707,
+      "p99": 17.5636,
+      "max": 19.7427
+    },
+    "aggregateBufferedAmountMaxBytes": 0,
+    "aggregateBufferedAmountMaxSampledBytes": 0,
+    "bufferedAmountLimitBytes": 67108864,
+    "bufferLimitExceeded": false,
+    "probeMessagesSent": 20,
+    "setupProbeBodyBytesSent": 1320,
+    "setupProbeProtocolTextBytesSent": 3980
+  },
+  "errors": {
+    "total": 0,
+    "bySafeCode": {},
+    "unmatchedDeliveries": 0,
+    "sendFailures": 0
+  },
+  "rawLatencyFileTemp": "C:\\Users\\enssels\\AppData\\Local\\Temp\\realtimecompare-latency-3ed42d5b-441a-45a1-b335-ce6e0d105ed6-stomp-sketch-workersmoke-stomp-sketch.csv"
+}

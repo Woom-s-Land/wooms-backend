@@ -1,0 +1,12 @@
+{
+  "name": "wooms-realtime-benchmark-tools",
+  "private": true,
+  "type": "module",
+  "description": "Test-only STOMP and Native WebSocket benchmark worker",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "ws": "8.22.1"
+  }
+}

@@ -13,6 +13,8 @@ import com.ee06.wooms.domain.wooms.entity.MapColorStatus;
 import com.ee06.wooms.domain.wooms.entity.Wooms;
 import com.ee06.wooms.domain.wooms.exception.ex.*;
 import com.ee06.wooms.domain.wooms.repository.WoomsRepository;
+import com.ee06.wooms.domain.realtime.access.event.RoomAccessRevoked;
+import com.ee06.wooms.domain.realtime.access.port.RoomAccessRevocationPublisher;
 import com.ee06.wooms.global.common.CommonResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class WoomsService {
     private final UserRepository userRepository;
     private final WoomsRepository woomsRepository;
     private final EnrollmentRepository enrollmentRepository;
+    private final RoomAccessRevocationPublisher roomAccessRevocationPublisher;
 
     public WoomsDto createWooms(CustomUserDetails currentUser, WoomsCreateRequestDto woomsCreateRequestDto) {
 
@@ -189,8 +192,20 @@ public class WoomsService {
                 enrollmentRepository.countByWoomsIdAndStatus(woomsId, EnrollmentStatus.ACCEPT) > 1)
             throw new WoomsLeaderNotLeftWoomsException();
 
-        enrollmentRepository.findByPkUserUuidAndWoomsId(UUID.fromString(currentUser.getUuid()), woomsId)
-                .ifPresent(enrollment -> enrollment.modifyEnrollmentStatus(EnrollmentStatus.REFUSE));
+        enrollmentRepository.findByPkUserUuidAndWoomsId(user.getUuid(), woomsId)
+                .ifPresent(enrollment -> {
+                    boolean revoked = enrollment.getStatus() == EnrollmentStatus.ACCEPT;
+                    Wooms room = null;
+                    if (revoked) {
+                        room = woomsRepository.findWoomsById(woomsId)
+                                .orElseThrow(WoomsNotValidException::new);
+                    }
+                    enrollment.modifyEnrollmentStatus(EnrollmentStatus.REFUSE);
+                    if (revoked) {
+                        roomAccessRevocationPublisher.publishAfterCommit(
+                                RoomAccessRevoked.memberLeft(room.getInviteCode(), user.getUuid()));
+                    }
+                });
 
         return new CommonResponse("ok");
     }

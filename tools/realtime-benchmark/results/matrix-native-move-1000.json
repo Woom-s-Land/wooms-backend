@@ -1,0 +1,512 @@
+{
+  "ok": true,
+  "runId": "0b66c4bf-0b9d-4766-9ab5-840bbda72855",
+  "mode": "native",
+  "workload": "move",
+  "endpoint": "ws://127.0.0.1:8090/ws",
+  "profile": {
+    "workerCount": 4,
+    "roomsPerWorker": 25,
+    "usersPerRoom": 10,
+    "connections": 1000,
+    "totalTargetMsgPerSecond": 1000,
+    "workerTargetMsgPerSecond": 250,
+    "warmupSeconds": 5,
+    "measurementSeconds": 20,
+    "drainSeconds": 10
+  },
+  "coordination": {
+    "startEpochMs": 1793668652628,
+    "workersReady": 4,
+    "workersCompleted": 4,
+    "readinessTimeoutMs": 120000,
+    "watchdogMs": 90000,
+    "watchdogTriggered": false
+  },
+  "connections": {
+    "attempted": 1000,
+    "readinessProbeComplete": 1000,
+    "liveBeforeCleanup": 1000,
+    "closedDuringRun": 0,
+    "readyRoomSlots": 1000
+  },
+  "ingress": {
+    "targetMessages": 20000,
+    "successfulCohortMessages": 20002,
+    "actualMsgPerSecond": 1000.1,
+    "targetAttainment": 1.0001,
+    "applicationBodyBytes": 1602162,
+    "protocolTextBytes": 3362338,
+    "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+    "workerPacingLagMs": [
+      {
+        "workerId": "1",
+        "pid": 38440,
+        "lag": {
+          "p50": 6.613,
+          "p95": 14.3972,
+          "p99": 15.7979,
+          "max": 18.5519
+        }
+      },
+      {
+        "workerId": "2",
+        "pid": 10732,
+        "lag": {
+          "p50": 6.3653,
+          "p95": 14.0982,
+          "p99": 15.5143,
+          "max": 17.5504
+        }
+      },
+      {
+        "workerId": "3",
+        "pid": 6500,
+        "lag": {
+          "p50": 6.5809,
+          "p95": 14.3216,
+          "p99": 15.7001,
+          "max": 25.196
+        }
+      },
+      {
+        "workerId": "4",
+        "pid": 49144,
+        "lag": {
+          "p50": 6.4841,
+          "p95": 14.2808,
+          "p99": 15.6835,
+          "max": 25.2021
+        }
+      }
+    ]
+  },
+  "delivery": {
+    "expectedFanoutDeliveryCount": 200020,
+    "uniqueDeliveriesInMeasurementWindow": 200020,
+    "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+    "uniqueDeliveriesTotalThroughDrain": 200020,
+    "missingAfterDrain": 0,
+    "lateBeyondDrain": 0,
+    "duplicateDeliveries": 0,
+    "unexpectedRecipients": 0,
+    "sequenceReversals": 0,
+    "unmatchedDeliveries": 0,
+    "correlatedProtocolTextBytesReceived": 44136440,
+    "latencyMsPooledFromAllWorkerSamples": {
+      "samples": 200020,
+      "p50": 1.0415,
+      "p95": 2.328,
+      "p99": 3.6707,
+      "max": 14.4958,
+      "missingWorkerFiles": []
+    }
+  },
+  "generator": {
+    "workerProcessCpuMs": {
+      "userMs": 6453,
+      "systemMs": 1985,
+      "totalMs": 8438
+    },
+    "workerSummaries": [
+      {
+        "workerId": "1",
+        "pid": 38440,
+        "ok": true,
+        "connections": {
+          "attempted": 250,
+          "connected": 250,
+          "readinessProbeComplete": 250,
+          "liveBeforeCleanup": 250,
+          "closedDuringRun": 0
+        },
+        "ingress": {
+          "targetMsgPerSecond": 250,
+          "successfulCohortMessages": 5000,
+          "actualCohortMsgPerSecond": 250,
+          "attemptedMessagesAllPhases": 6249,
+          "successfulMessagesAllPhases": 6249,
+          "failedSends": 0,
+          "pacingLagMs": {
+            "p50": 6.613,
+            "p95": 14.3972,
+            "p99": 15.7979,
+            "max": 18.5519
+          },
+          "applicationBodyBytes": 400500,
+          "protocolTextBytes": 840500,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+          "sampleApplicationBodyBytes": 81,
+          "sampleProtocolTextBytes": 169
+        },
+        "delivery": {
+          "expectedFanoutDeliveryCount": 50000,
+          "uniqueDeliveriesInMeasurementWindow": 50000,
+          "measurementWindowUniqueDeliveryPerSecond": 2500,
+          "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+          "uniqueDeliveriesTotalThroughDrain": 50000,
+          "missingAfterDrain": 0,
+          "lateBeyondDrain": 0,
+          "deliveryBeforeMeasurement": 0,
+          "duplicateDeliveries": 0,
+          "unexpectedRecipients": 0,
+          "sequenceReversals": 0,
+          "latencyMs": {
+            "p50": 1.0495,
+            "p95": 2.476,
+            "p99": 4.0015,
+            "max": 14.4958
+          },
+          "correlatedProtocolTextBytesReceived": 11033000,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+        },
+        "generator": {
+          "cpuUserMs": 1484,
+          "cpuSystemMs": 454,
+          "processCpuMs": 1938,
+          "measurementWindow": true,
+          "rssBytesAtMeasurementEnd": 86974464,
+          "rssBytesMaxSampledDuringMeasurement": 87228416,
+          "heapUsedBytesAtMeasurementEnd": 19601072,
+          "heapUsedBytesMaxSampledDuringMeasurement": 31120072,
+          "eventLoopDelayMs": {
+            "p50": 16.4987,
+            "p95": 21.4139,
+            "p99": 23.4783,
+            "max": 26.8206
+          },
+          "aggregateBufferedAmountMaxBytes": 0,
+          "aggregateBufferedAmountMaxSampledBytes": 0,
+          "bufferedAmountLimitBytes": 67108864,
+          "bufferLimitExceeded": false,
+          "probeMessagesSent": 250,
+          "probeSendFailures": 0,
+          "setupProbeBodyBytesSent": 20525,
+          "setupProbeProtocolTextBytesSent": 42525
+        },
+        "failure": null,
+        "exitCode": 0
+      },
+      {
+        "workerId": "2",
+        "pid": 10732,
+        "ok": true,
+        "connections": {
+          "attempted": 250,
+          "connected": 250,
+          "readinessProbeComplete": 250,
+          "liveBeforeCleanup": 250,
+          "closedDuringRun": 0
+        },
+        "ingress": {
+          "targetMsgPerSecond": 250,
+          "successfulCohortMessages": 5000,
+          "actualCohortMsgPerSecond": 250,
+          "attemptedMessagesAllPhases": 6249,
+          "successfulMessagesAllPhases": 6249,
+          "failedSends": 0,
+          "pacingLagMs": {
+            "p50": 6.3653,
+            "p95": 14.0982,
+            "p99": 15.5143,
+            "max": 17.5504
+          },
+          "applicationBodyBytes": 400500,
+          "protocolTextBytes": 840500,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+          "sampleApplicationBodyBytes": 81,
+          "sampleProtocolTextBytes": 169
+        },
+        "delivery": {
+          "expectedFanoutDeliveryCount": 50000,
+          "uniqueDeliveriesInMeasurementWindow": 50000,
+          "measurementWindowUniqueDeliveryPerSecond": 2500,
+          "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+          "uniqueDeliveriesTotalThroughDrain": 50000,
+          "missingAfterDrain": 0,
+          "lateBeyondDrain": 0,
+          "deliveryBeforeMeasurement": 0,
+          "duplicateDeliveries": 0,
+          "unexpectedRecipients": 0,
+          "sequenceReversals": 0,
+          "latencyMs": {
+            "p50": 1.0404,
+            "p95": 2.2953,
+            "p99": 3.7483,
+            "max": 11.9174
+          },
+          "correlatedProtocolTextBytesReceived": 11033000,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+        },
+        "generator": {
+          "cpuUserMs": 1656,
+          "cpuSystemMs": 453,
+          "processCpuMs": 2109,
+          "measurementWindow": true,
+          "rssBytesAtMeasurementEnd": 87687168,
+          "rssBytesMaxSampledDuringMeasurement": 87687168,
+          "heapUsedBytesAtMeasurementEnd": 19391344,
+          "heapUsedBytesMaxSampledDuringMeasurement": 30699400,
+          "eventLoopDelayMs": {
+            "p50": 16.4823,
+            "p95": 21.25,
+            "p99": 23.593,
+            "max": 25.1167
+          },
+          "aggregateBufferedAmountMaxBytes": 0,
+          "aggregateBufferedAmountMaxSampledBytes": 0,
+          "bufferedAmountLimitBytes": 67108864,
+          "bufferLimitExceeded": false,
+          "probeMessagesSent": 250,
+          "probeSendFailures": 0,
+          "setupProbeBodyBytesSent": 20525,
+          "setupProbeProtocolTextBytesSent": 42525
+        },
+        "failure": null,
+        "exitCode": 0
+      },
+      {
+        "workerId": "3",
+        "pid": 6500,
+        "ok": true,
+        "connections": {
+          "attempted": 250,
+          "connected": 250,
+          "readinessProbeComplete": 250,
+          "liveBeforeCleanup": 250,
+          "closedDuringRun": 0
+        },
+        "ingress": {
+          "targetMsgPerSecond": 250,
+          "successfulCohortMessages": 5001,
+          "actualCohortMsgPerSecond": 250.05,
+          "attemptedMessagesAllPhases": 6250,
+          "successfulMessagesAllPhases": 6250,
+          "failedSends": 0,
+          "pacingLagMs": {
+            "p50": 6.5809,
+            "p95": 14.3216,
+            "p99": 15.7001,
+            "max": 25.196
+          },
+          "applicationBodyBytes": 400581,
+          "protocolTextBytes": 840669,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+          "sampleApplicationBodyBytes": 81,
+          "sampleProtocolTextBytes": 169
+        },
+        "delivery": {
+          "expectedFanoutDeliveryCount": 50010,
+          "uniqueDeliveriesInMeasurementWindow": 50010,
+          "measurementWindowUniqueDeliveryPerSecond": 2500.5,
+          "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+          "uniqueDeliveriesTotalThroughDrain": 50010,
+          "missingAfterDrain": 0,
+          "lateBeyondDrain": 0,
+          "deliveryBeforeMeasurement": 0,
+          "duplicateDeliveries": 0,
+          "unexpectedRecipients": 0,
+          "sequenceReversals": 0,
+          "latencyMs": {
+            "p50": 1.0215,
+            "p95": 2.2704,
+            "p99": 3.4581,
+            "max": 9.8451
+          },
+          "correlatedProtocolTextBytesReceived": 11035220,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+        },
+        "generator": {
+          "cpuUserMs": 1719,
+          "cpuSystemMs": 453,
+          "processCpuMs": 2172,
+          "measurementWindow": true,
+          "rssBytesAtMeasurementEnd": 87146496,
+          "rssBytesMaxSampledDuringMeasurement": 87146496,
+          "heapUsedBytesAtMeasurementEnd": 20172744,
+          "heapUsedBytesMaxSampledDuringMeasurement": 30876240,
+          "eventLoopDelayMs": {
+            "p50": 16.5151,
+            "p95": 21.3156,
+            "p99": 23.806,
+            "max": 26.7878
+          },
+          "aggregateBufferedAmountMaxBytes": 0,
+          "aggregateBufferedAmountMaxSampledBytes": 0,
+          "bufferedAmountLimitBytes": 67108864,
+          "bufferLimitExceeded": false,
+          "probeMessagesSent": 250,
+          "probeSendFailures": 0,
+          "setupProbeBodyBytesSent": 20525,
+          "setupProbeProtocolTextBytesSent": 42525
+        },
+        "failure": null,
+        "exitCode": 0
+      },
+      {
+        "workerId": "4",
+        "pid": 49144,
+        "ok": true,
+        "connections": {
+          "attempted": 250,
+          "connected": 250,
+          "readinessProbeComplete": 250,
+          "liveBeforeCleanup": 250,
+          "closedDuringRun": 0
+        },
+        "ingress": {
+          "targetMsgPerSecond": 250,
+          "successfulCohortMessages": 5001,
+          "actualCohortMsgPerSecond": 250.05,
+          "attemptedMessagesAllPhases": 6250,
+          "successfulMessagesAllPhases": 6250,
+          "failedSends": 0,
+          "pacingLagMs": {
+            "p50": 6.4841,
+            "p95": 14.2808,
+            "p99": 15.6835,
+            "max": 25.2021
+          },
+          "applicationBodyBytes": 400581,
+          "protocolTextBytes": 840669,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers",
+          "sampleApplicationBodyBytes": 81,
+          "sampleProtocolTextBytes": 169
+        },
+        "delivery": {
+          "expectedFanoutDeliveryCount": 50010,
+          "uniqueDeliveriesInMeasurementWindow": 50010,
+          "measurementWindowUniqueDeliveryPerSecond": 2500.5,
+          "uniqueDeliveriesAfterMeasureEndDuringDrain": 0,
+          "uniqueDeliveriesTotalThroughDrain": 50010,
+          "missingAfterDrain": 0,
+          "lateBeyondDrain": 0,
+          "deliveryBeforeMeasurement": 0,
+          "duplicateDeliveries": 0,
+          "unexpectedRecipients": 0,
+          "sequenceReversals": 0,
+          "latencyMs": {
+            "p50": 1.0531,
+            "p95": 2.2907,
+            "p99": 3.4081,
+            "max": 8.6471
+          },
+          "correlatedProtocolTextBytesReceived": 11035220,
+          "protocolTextBytesDefinition": "UTF-8 application-protocol text; excludes WebSocket and TCP framing/headers"
+        },
+        "generator": {
+          "cpuUserMs": 1594,
+          "cpuSystemMs": 625,
+          "processCpuMs": 2219,
+          "measurementWindow": true,
+          "rssBytesAtMeasurementEnd": 87003136,
+          "rssBytesMaxSampledDuringMeasurement": 87236608,
+          "heapUsedBytesAtMeasurementEnd": 22016632,
+          "heapUsedBytesMaxSampledDuringMeasurement": 30933368,
+          "eventLoopDelayMs": {
+            "p50": 16.4741,
+            "p95": 21.2337,
+            "p99": 23.7732,
+            "max": 25.2969
+          },
+          "aggregateBufferedAmountMaxBytes": 0,
+          "aggregateBufferedAmountMaxSampledBytes": 0,
+          "bufferedAmountLimitBytes": 67108864,
+          "bufferLimitExceeded": false,
+          "probeMessagesSent": 250,
+          "probeSendFailures": 0,
+          "setupProbeBodyBytesSent": 20525,
+          "setupProbeProtocolTextBytesSent": 42525
+        },
+        "failure": null,
+        "exitCode": 0
+      }
+    ]
+  },
+  "resources": {
+    "sampleCount": 20,
+    "sampleWindowStartEpochMs": 1793668652628,
+    "sampleWindowEndEpochMs": 1793668672628,
+    "firstSampleEpochMs": 1793668653133,
+    "lastSampleEpochMs": 1793668671982,
+    "firstSampleOffsetFromStartMs": 505,
+    "lastSampleOffsetFromEndMs": -646,
+    "logicalProcessors": 18,
+    "cpuNormalization": "Process CPU: 100% equals one logical core. Host busy percent is normalized across all reported logical processors; hostBusyOneCoreEquivalentPercent multiplies it by the logical processor count.",
+    "serverPids": [
+      9464,
+      22076
+    ],
+    "workerPids": [
+      38440,
+      10732,
+      6500,
+      49144
+    ],
+    "serverProcessCpuSeconds": 30.5623,
+    "workerProcessCpuSeconds": 12.6095,
+    "serverPeakPrivateBytes": 1326338048,
+    "serverPeakWorkingSetBytes": 1220935680,
+    "workerPeakPrivateBytes": 405659648,
+    "workerPeakWorkingSetBytes": 341815296,
+    "serverPeakAggregation": "maximum same-sample sum across listed server PIDs",
+    "processSamples": [
+      {
+        "pid": 9464,
+        "role": "server",
+        "cpuDeltaSeconds": 13.5,
+        "peakWorkingSetBytes": 813064192,
+        "peakPrivateBytes": 867561472,
+        "missingSamples": 0
+      },
+      {
+        "pid": 22076,
+        "role": "server",
+        "cpuDeltaSeconds": 17.0623,
+        "peakWorkingSetBytes": 408125440,
+        "peakPrivateBytes": 459735040,
+        "missingSamples": 0
+      },
+      {
+        "pid": 38440,
+        "role": "worker",
+        "cpuDeltaSeconds": 3.0313,
+        "peakWorkingSetBytes": 85311488,
+        "peakPrivateBytes": 101466112,
+        "missingSamples": 0
+      },
+      {
+        "pid": 10732,
+        "role": "worker",
+        "cpuDeltaSeconds": 3.2501,
+        "peakWorkingSetBytes": 86040576,
+        "peakPrivateBytes": 102064128,
+        "missingSamples": 0
+      },
+      {
+        "pid": 6500,
+        "role": "worker",
+        "cpuDeltaSeconds": 3.2032,
+        "peakWorkingSetBytes": 85336064,
+        "peakPrivateBytes": 101351424,
+        "missingSamples": 0
+      },
+      {
+        "pid": 49144,
+        "role": "worker",
+        "cpuDeltaSeconds": 3.1249,
+        "peakWorkingSetBytes": 85127168,
+        "peakPrivateBytes": 101031936,
+        "missingSamples": 0
+      }
+    ],
+    "hostBusyPercentOfLogicalProcessorsAverage": 40.05,
+    "hostBusyPercentOfLogicalProcessorsMax": 83,
+    "hostBusyOneCoreEquivalentPercentMax": 1494,
+    "rawSamplesTemp": "C:\\Users\\enssels\\AppData\\Local\\Temp\\realtimecompare-coordinator-0b66c4bf-0b9d-4766-9ab5-840bbda72855-OzGS6S\\resources.jsonl",
+    "samplerExitCode": 0
+  },
+  "failures": [],
+  "preparationFailure": null,
+  "resourceSamplerOk": true
+}

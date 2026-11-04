@@ -1,0 +1,21 @@
+allprojects { project ->
+    if (project.projectDir.name == 'wooms-backend') {
+        project.afterEvaluate {
+            project.sourceSets.test.java.srcDir(project.file('tools/realtime-benchmark/fixture'))
+            project.tasks.register('prepareRealtimeFixtureClasspath') {
+                dependsOn project.tasks.named('testClasses')
+                doLast {
+                    def classpathPath = project.findProperty('realtimeFixtureClasspathFile')
+                            ?: new File(System.getenv('TEMP'), 'realtimecompare-test-classpath.txt').absolutePath
+                    def classpathFile = new File(classpathPath)
+                    classpathFile.parentFile.mkdirs()
+                    def fixtureRuntime = project.files(
+                            project.sourceSets.test.output.classesDirs,
+                            project.sourceSets.main.runtimeClasspath)
+                    classpathFile.setText(fixtureRuntime.asPath, 'UTF-8')
+                    println "Realtime fixture test classpath written to ${classpathFile.absolutePath}"
+                }
+            }
+        }
+    }
+}
